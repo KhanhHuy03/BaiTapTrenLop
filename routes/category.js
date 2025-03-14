@@ -1,18 +1,18 @@
 var express = require('express');
 var router = express.Router();
-let productSchema = require('../schemas/category')
+let categorySchema = require('../schemas/category')
 
-router.get('/', async function(req, res, next) {
-    let categories = await productSchema.find({});
+router.get('/categories', async function(req, res, next) {
+    let categories = await categorySchema.find({});
     res.send(categories);
 });
 
-router.get('/:id', async function(req, res, next) {
+router.get('/category/:id', async function(req, res, next) {
     try {
         let category = await categorySchema.findById(req.params.id);
         res.send({
             success:true,
-            data:category
+            data:categoryt t
         });
     } catch (error) {
         res.status(404).send({
@@ -42,18 +42,15 @@ router.post('/newCategory', async function(req, res, next) {
     }
 });
 
-router.put('/edit/category/:id', async function(req, res, next) {
+router.put('/editcategory/:id', async function(req, res, next) {
     try {
         let body = req.body;
         let updatedObj = {}
         if(body.name){
             updatedObj.name = body.name
         }
-        if(body.quantity){
-            updatedObj.quantity = body.quantity
-        }
-        if(body.price){
-            updatedObj.price = body.price
+        if(body.description){
+            updatedObj.description = body.description
         }
         if(body.category){
             updatedObj.category = body.category
@@ -67,6 +64,19 @@ router.put('/edit/category/:id', async function(req, res, next) {
         res.status(404).send({
             success:false,
             message:error.message
+        })
+    }
+});
+router.put('/softDeleteCategory/:id',async function(res,req,next)
+{
+    try{
+
+
+
+    }catch(error){
+        res.status(404).send({
+            success:false,
+            message:error.message,
         })
     }
 });
